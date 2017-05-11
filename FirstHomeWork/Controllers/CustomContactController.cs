@@ -28,6 +28,13 @@ namespace FirstHomeWork.Controllers
         public ActionResult Create()
         {
             var data = new 客戶聯絡人();
+            List<SelectListItem> items = new List<SelectListItem>();
+            var listid = db.客戶資料.Select(x => x.Id).ToList();
+            foreach (var item in listid)
+            {
+                items.Add(new SelectListItem() { Text = item.ToString(), Value = item.ToString() });
+            }
+            ViewBag.List客戶id = items;
             return View(data);
         }
 
@@ -35,23 +42,41 @@ namespace FirstHomeWork.Controllers
         [HttpPost]
         public ActionResult Create(客戶聯絡人 CustomData)
         {
-            try
+            List<SelectListItem> items = new List<SelectListItem>();
+            var listid = db.客戶資料.Select(x => x.Id).ToList();
+            foreach (var item in listid)
             {
-                // TODO: Add insert logic here
-                db.客戶聯絡人.Add(CustomData);
-                db.SaveChanges();
+                items.Add(new SelectListItem() { Text = item.ToString(), Value = item.ToString() });
+            }
+            ViewBag.List客戶id = items;
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // TODO: Add insert logic here
+                    db.客戶聯絡人.Add(CustomData);
+                    db.SaveChanges();
 
-                return RedirectToAction("Index");
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    return View(CustomData);
+                }
             }
-            catch
-            {
-                return View(CustomData);
-            }
+            return View(CustomData);
         }
 
         // GET: CustomContact/Edit/5
         public ActionResult Edit(int id)
         {
+            List<SelectListItem> items = new List<SelectListItem>();
+            var listid = db.客戶資料.Select(x => x.Id).ToList();
+            foreach (var item in listid)
+            {
+                items.Add(new SelectListItem() { Text = item.ToString(), Value = item.ToString() });
+            }
+            ViewBag.List客戶id = items;
             var data = db.客戶聯絡人.Find(id);
             return View(data);
         }
@@ -60,30 +85,41 @@ namespace FirstHomeWork.Controllers
         [HttpPost]
         public ActionResult Edit(int id, 客戶聯絡人 EditedData)
         {
-            try
+            List<SelectListItem> items = new List<SelectListItem>();
+            var listid = db.客戶資料.Select(x => x.Id).ToList();
+            foreach (var item in listid)
             {
-                var data = db.客戶聯絡人.Find(id);
-                data.Email = EditedData.Email;
-                data.客戶Id = EditedData.客戶Id;
-                data.姓名 = EditedData.姓名;
-                data.手機 = EditedData.手機;
-                data.職稱 = EditedData.職稱;
-                data.電話 = EditedData.電話;
-                db.SaveChanges();
+                items.Add(new SelectListItem() { Text = item.ToString(), Value = item.ToString() });
+            }
+            ViewBag.List客戶id = items;
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var data = db.客戶聯絡人.Find(id);
+                    data.Email = EditedData.Email;
+                    data.客戶Id = EditedData.客戶Id;
+                    data.姓名 = EditedData.姓名;
+                    data.手機 = EditedData.手機;
+                    data.職稱 = EditedData.職稱;
+                    data.電話 = EditedData.電話;
+                    db.SaveChanges();
 
-                return RedirectToAction("Index");
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    return View(EditedData);
+                }
             }
-            catch
-            {
-                return View();
-            }
+            return View(EditedData);
         }
 
         // GET: CustomContact/Delete/5
         public ActionResult Delete(int id)
         {
             var data = db.客戶聯絡人.Find(id);
-            db.客戶聯絡人.Remove(data);
+            data.是否已刪除 = true;
             db.SaveChanges();
             return RedirectToAction("Index");
         }

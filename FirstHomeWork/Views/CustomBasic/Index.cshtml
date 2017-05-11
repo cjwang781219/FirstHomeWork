@@ -5,6 +5,20 @@
 }
 
 <h2>Index</h2>
+<table>
+    <tr>
+        <td>
+            @Html.DisplayName("客戶名稱");
+        </td>
+        <td>
+            @Html.TextBox("txtQry",null, htmlAttributes: new { @class = "control-label col-md-2" })
+        </td>
+        <td>
+            <input type="submit" value="查詢" class="btn btn-default" />
+        </td>
+    </tr>
+</table>
+
 
 <p>
     @Html.ActionLink("Create New", "Create")
