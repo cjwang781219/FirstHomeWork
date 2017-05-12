@@ -13,9 +13,14 @@ namespace FirstHomeWork.Controllers
         // GET: CustomBasic
         public ActionResult Index()
         {
-            
-            
             var data = db.客戶資料.ToList();
+            return View(data);
+        }
+
+        [HttpPost]
+        public ActionResult Index(string CustomName)
+        {
+            var data = db.客戶資料.Where(x=> x.客戶名稱.Contains(CustomName)).ToList();
             return View(data);
         }
 

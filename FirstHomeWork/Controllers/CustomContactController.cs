@@ -17,6 +17,13 @@ namespace FirstHomeWork.Controllers
             return View(data);
         }
 
+        [HttpPost]
+        public ActionResult Index(string CustomName)
+        {
+            var data = db.客戶聯絡人.Where(x => x.客戶資料.客戶名稱.Contains(CustomName)).ToList();
+            return View(data);
+        }
+
         // GET: CustomContact/Details/5
         public ActionResult Details(int id)
         {
