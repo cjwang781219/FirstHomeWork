@@ -9,33 +9,34 @@ namespace FirstHomeWork.Controllers
 {
     public class CustomBasicController : Controller
     {
-        客戶資料Entities db = new 客戶資料Entities();
-        [Authorize]
+        //客戶資料Entities db = new 客戶資料Entities();
+        客戶資料Repository rpo = RepositoryHelper.Get客戶資料Repository();
+        //[Authorize]
         // GET: CustomBasic
         public ActionResult Index()
         {
-            var data = db.客戶資料.ToList();
+            var data = rpo.get客戶資料();
             return View(data);
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpPost]
         public ActionResult Index(string CustomName)
         {
-            var data = db.客戶資料.Where(x=> x.客戶名稱.Contains(CustomName)).ToList();
+            var data = rpo.get客戶資料().Where(x=> x.客戶名稱.Contains(CustomName)).ToList();
             return View(data);
         }
 
-        [Authorize]
+        //[Authorize]
         // GET: CustomBasic/Details/5
         public ActionResult Details(int id)
         {
-            var data = db.客戶資料.Find(id);
+            var data = rpo.get客戶資料ByID(id);
             return View(data);
         }
 
         // GET: CustomBasic/Create
-        [Authorize]
+        //[Authorize]
         public ActionResult Create()
         {
             var data = new 客戶資料();
@@ -43,7 +44,7 @@ namespace FirstHomeWork.Controllers
         }
 
         // POST: CustomBasic/Create
-        [Authorize]
+        //[Authorize]
         [HttpPost]
         public ActionResult Create(客戶資料 CustomData)
         {
@@ -52,8 +53,8 @@ namespace FirstHomeWork.Controllers
                 try
                 {
                     // TODO: Add insert logic here
-                    db.客戶資料.Add(CustomData);
-                    db.SaveChanges();
+                    rpo.Add(CustomData);
+                    rpo.UnitOfWork.Commit();
 
                     return RedirectToAction("Index");
                 }
@@ -68,12 +69,12 @@ namespace FirstHomeWork.Controllers
         // GET: CustomBasic/Edit/5
         public ActionResult Edit(int id)
         {
-            var data = db.客戶資料.Find(id);
+            var data = rpo.get客戶資料ByID(id);
             return View(data);
         }
 
         // POST: CustomBasic/Edit/5
-        [Authorize]
+        //[Authorize]
         [HttpPost]
         public ActionResult Edit(int id, 客戶資料 EditedData)
         {
@@ -81,14 +82,15 @@ namespace FirstHomeWork.Controllers
             {
                 try
                 {
-                    var data = db.客戶資料.Find(id);
+                    var data = rpo.get客戶資料ByID(id);
                     data.Email = EditedData.Email;
                     data.傳真 = EditedData.傳真;
                     data.地址 = EditedData.地址;
                     data.客戶名稱 = EditedData.客戶名稱;
                     data.統一編號 = EditedData.統一編號;
                     data.電話 = EditedData.電話;
-                    db.SaveChanges();
+                    rpo.Edit(data);
+                    rpo.UnitOfWork.Commit();
 
                     return RedirectToAction("Index");
                 }
@@ -101,12 +103,13 @@ namespace FirstHomeWork.Controllers
         }
 
         // GET: CustomBasic/Delete/5
-        [Authorize]
+        //[Authorize]
         public ActionResult Delete(int id)
         {
-            var data = db.客戶資料.Find(id);
+            var data = rpo.get客戶資料ByID(id);
             data.是否已刪除 = true;
-            db.SaveChanges();
+            rpo.Edit(data);
+            rpo.UnitOfWork.Commit();
             return RedirectToAction("Index");
         }
         

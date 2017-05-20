@@ -9,11 +9,11 @@ namespace FirstHomeWork.Controllers
 {
     public class CustomViewController : Controller
     {
+        CustomDataViewRepository rpo = RepositoryHelper.GetCustomDataViewRepository();
         // GET: CustomView
         public ActionResult Index()
         {
-            客戶資料Entities db = new 客戶資料Entities();
-            var data = db.CustomDataView.ToList();
+            var data = rpo.All();
             return View(data);
         }
     }
