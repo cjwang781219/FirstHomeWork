@@ -10,6 +10,7 @@ namespace FirstHomeWork.Controllers
     public class CustomBasicController : Controller
     {
         客戶資料Entities db = new 客戶資料Entities();
+        [Authorize]
         // GET: CustomBasic
         public ActionResult Index()
         {
@@ -17,6 +18,7 @@ namespace FirstHomeWork.Controllers
             return View(data);
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult Index(string CustomName)
         {
@@ -24,6 +26,7 @@ namespace FirstHomeWork.Controllers
             return View(data);
         }
 
+        [Authorize]
         // GET: CustomBasic/Details/5
         public ActionResult Details(int id)
         {
@@ -32,6 +35,7 @@ namespace FirstHomeWork.Controllers
         }
 
         // GET: CustomBasic/Create
+        [Authorize]
         public ActionResult Create()
         {
             var data = new 客戶資料();
@@ -39,6 +43,7 @@ namespace FirstHomeWork.Controllers
         }
 
         // POST: CustomBasic/Create
+        [Authorize]
         [HttpPost]
         public ActionResult Create(客戶資料 CustomData)
         {
@@ -68,6 +73,7 @@ namespace FirstHomeWork.Controllers
         }
 
         // POST: CustomBasic/Edit/5
+        [Authorize]
         [HttpPost]
         public ActionResult Edit(int id, 客戶資料 EditedData)
         {
@@ -95,6 +101,7 @@ namespace FirstHomeWork.Controllers
         }
 
         // GET: CustomBasic/Delete/5
+        [Authorize]
         public ActionResult Delete(int id)
         {
             var data = db.客戶資料.Find(id);
